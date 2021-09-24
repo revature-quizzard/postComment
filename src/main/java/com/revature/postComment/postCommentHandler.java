@@ -1,5 +1,4 @@
 package com.revature.postComment;
 
-public class PostCommentHandler {
-
+public class postCommentHandler {
 }
