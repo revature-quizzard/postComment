@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: A simple AWS Lambda for adding new comments on a thread to the ForumNodes DynamnoDB table.
 Resources:
-  getCommentsForums:
+  postCommentForum:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: target/postComment-1.0-SNAPSHOT.jar
