@@ -1,2 +1,4 @@
-package com.revature.postComment;public class Comment {
+package com.revature.postComment;
+
+public class Comment {
 }
