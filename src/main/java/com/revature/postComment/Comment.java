@@ -17,7 +17,7 @@ public class Comment {
     private String id;
 
     @DynamoDBAttribute
-    private int date_created;
+    private String date_created;
 
     @DynamoDBAttribute
     private List<String> ancestors;
