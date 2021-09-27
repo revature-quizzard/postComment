@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -17,7 +18,7 @@ public class Comment {
     private String id;
 
     @DynamoDBAttribute
-    private String date_created;
+    private String date_created = LocalDateTime.MIN.toString();
 
     @DynamoDBAttribute
     private List<String> ancestors;

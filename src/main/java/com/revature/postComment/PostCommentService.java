@@ -1,5 +1,8 @@
 package com.revature.postComment;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 
 public class PostCommentService {
@@ -7,10 +10,16 @@ public class PostCommentService {
     private NodeRepository nodeRepo = new NodeRepository();
 
     public boolean addComment(Comment comment) {
-        if (comment.getDate_created().equals(null) || comment.getDate_created().length() != 26) {
-            comment.setDate_created(LocalDateTime.now().toString());
+        boolean valid;
+        try {
+            if (comment.getDate_created().length() != 26 || comment.getDate_created().equals(LocalDateTime.MIN.toString())) {
+                comment.setDate_created(LocalDateTime.now().toString());
+            }
+            valid = isValid(comment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            valid = false;
         }
-        boolean valid = isValid(comment);
         if (valid) {
             nodeRepo.addComment(comment);
         }

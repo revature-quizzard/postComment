@@ -20,8 +20,10 @@ public class postCommentHandler implements RequestHandler<APIGatewayProxyRequest
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
 
         logger.log("hey look, it worked!");
+        Comment input = mapper.fromJson(requestEvent.getBody(), Comment.class);
+        logger.log(input.toString());
 
-        boolean saved = service.addComment(mapper.fromJson(requestEvent.getBody(), Comment.class));
+        boolean saved = service.addComment(input);
 
         if (saved) {
             response.setStatusCode(201);
