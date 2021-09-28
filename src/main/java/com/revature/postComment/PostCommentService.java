@@ -7,7 +7,15 @@ import java.time.LocalDateTime;
 
 public class PostCommentService {
 
-    private NodeRepository nodeRepo = new NodeRepository();
+    private NodeRepository nodeRepo;
+
+    public PostCommentService() {
+        this.nodeRepo = new NodeRepository();
+    }
+
+    public PostCommentService(NodeRepository nodeRepo) {
+        this.nodeRepo = nodeRepo;
+    }
 
     public boolean addComment(Comment comment) {
         boolean valid;
