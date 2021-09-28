@@ -1,9 +1,5 @@
 package com.revature.postComment;
 
-import com.amazonaws.services.dynamodbv2.xspec.L;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
-
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 
 public class PostCommentService {
