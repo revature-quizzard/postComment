@@ -28,6 +28,10 @@ public class PostCommentService {
             e.printStackTrace();
             valid = false;
         }
+        Comment parentThread = nodeRepo.getThread(comment.getParent());
+        if (parentThread == null) {
+            valid = false;
+        }
         if (valid) {
             nodeRepo.addComment(comment);
         }
@@ -37,8 +41,15 @@ public class PostCommentService {
     public boolean isValid(Comment comment) {
         LocalDateTime commentDate = LocalDateTime.parse(comment.getDate_created());
 
+        // if any required fields are null, empty, or of an invalid size
+        if (comment == null || comment.getDescription() == null || comment.getDescription().trim().equals("") ||
+                comment.getOwner() == null || comment.getOwner().trim().equals("") || comment.getAncestors() == null ||
+                comment.getAncestors().size() != 2 || comment.getParent() == null ||
+                comment.getParent().trim().equals("")) {
+            return false;
+        }
+        // if comment isn't new (within ten minutes of .now)
         if (commentDate.isBefore(LocalDateTime.now().minusMinutes(10))) {
-            // if comment isn't new (within ten minutes of .now)
             return false;
         }
         return true;
