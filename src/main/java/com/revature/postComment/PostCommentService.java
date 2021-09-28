@@ -10,10 +10,18 @@ public class PostCommentService {
         this.nodeRepo = new NodeRepository();
     }
 
+    // used to mack NodeRepository in test suite
     public PostCommentService(NodeRepository nodeRepo) {
         this.nodeRepo = nodeRepo;
     }
 
+    /**
+     * This method takes in a comment and attempts to save that comment to the database.
+     *
+     * @param comment - the comment being added to the database
+     * @return - boolean indicating whether or not the comment was valid / saved
+     * @author - Luna Haines
+     */
     public boolean addComment(Comment comment) {
         boolean valid;
         if (comment == null) { return false; }
@@ -36,6 +44,13 @@ public class PostCommentService {
         return valid;
     }
 
+    /**
+     * This method checks to see that a comment is valid.
+     *
+     * @param comment - the comment to check validation on
+     * @return - boolean indicating whether or not a comment is valid
+     * @author - Luna Haines
+     */
     public boolean isValid(Comment comment) {
         LocalDateTime commentDate = LocalDateTime.parse(comment.getDate_created());
 
