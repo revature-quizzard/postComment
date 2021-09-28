@@ -2,6 +2,9 @@
 /shelf/
 /.idea/workspace.xml
 
+# IDE specific files
+/.idea
+
 # Compiled class file
 *.class
 
