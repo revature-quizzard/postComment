@@ -14,6 +14,15 @@ public class postCommentHandler implements RequestHandler<APIGatewayProxyRequest
     private static final Gson mapper = new GsonBuilder().setPrettyPrinting().create();
     private final PostCommentService service = new PostCommentService();
 
+    /**
+     * Handler method for Post Comment lambda. Handles the request it's given and returns an appropriate response
+     *
+     * @param requestEvent - the proxy event from AWS API Gateway
+     * @param context - the context of the request
+     * @return - a response with a 400 status code for invalid requests, a 201 status code and the saved item for valid requests
+     *
+     * @author - Luna Haines
+     */
     @SneakyThrows
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent requestEvent, Context context) {
