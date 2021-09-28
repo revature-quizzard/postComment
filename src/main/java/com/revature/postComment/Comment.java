@@ -20,10 +20,19 @@ public class Comment {
     private String id;
 
     @DynamoDBAttribute
+    private String owner;
+
+    @DynamoDBAttribute
+    private List<String> tags;
+
+    @DynamoDBAttribute
     private String date_created = LocalDateTime.MIN.toString();
 
     @DynamoDBAttribute
     private List<String> ancestors;
+
+    @DynamoDBAttribute
+    private int child_count;
 
     @DynamoDBAttribute
     private String description;
