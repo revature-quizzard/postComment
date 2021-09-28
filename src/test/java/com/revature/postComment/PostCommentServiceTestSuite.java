@@ -65,5 +65,62 @@ public class PostCommentServiceTestSuite {
 
     }
 
+    @Test
+    public void addComment_returnsFalse_whenGivenNullComment() {
+        // Act
+        boolean result = sut.addComment(null);
+
+        // Assert
+        verify(mockNodeRepo, times(0)).addComment(any());
+        verify(mockNodeRepo, times(0)).updateChild_count(any());
+        verify(mockNodeRepo, times(0)).getThread(any());
+        assertFalse(result);
+
+    }
+
+    @Test
+    public void addComment_returnsFalse_whenGivenInvalidFields() {
+        // Arrange
+        Comment mockComment = Comment.builder()
+                .id("12345")
+                .parent("threadId")
+                .ancestors(new ArrayList<>(Arrays.asList("subforumId","threadId")))
+                .owner("")
+                .build();
+
+        // Act
+        boolean result = sut.addComment(mockComment);
+
+        // Assert
+        verify(mockNodeRepo, times(0)).addComment(any());
+        verify(mockNodeRepo, times(0)).updateChild_count(any());
+        verify(mockNodeRepo, times(0)).getThread(any());
+        assertFalse(result);
+
+    }
+
+    @Test
+    public void addComment_returnsFalse_whenGivenInvalidParent() {
+        // Arrange
+        Comment mockComment = Comment.builder()
+                .id("12345")
+                .parent("threadId")
+                .ancestors(new ArrayList<>(Arrays.asList("subforumId","threadId")))
+                .description("Description goes here")
+                .owner("user")
+                .build();
+        when(mockNodeRepo.getThread(any())).thenReturn(null);
+
+        // Act
+        boolean result = sut.addComment(mockComment);
+
+        // Assert
+        verify(mockNodeRepo, times(0)).addComment(any());
+        verify(mockNodeRepo, times(0)).updateChild_count(any());
+        verify(mockNodeRepo, times(1)).getThread(any());
+        assertFalse(result);
+
+    }
+
 
 }
