@@ -6,23 +6,23 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 
 public class NodeRepository {
 
-    private final DynamoDBMapper dbmapper;
+    private final DynamoDBMapper dbMapper;
 
     public NodeRepository() {
-        this.dbmapper = new DynamoDBMapper(AmazonDynamoDBClientBuilder.defaultClient());
+        this.dbMapper = new DynamoDBMapper(AmazonDynamoDBClientBuilder.defaultClient());
     }
 
     public void addComment(Comment comment) {
-        dbmapper.save(comment);
+        dbMapper.save(comment);
     }
 
     public Comment getThread(String id) {
         Comment queryItem = Comment.builder().id(id).build();
 
-        return dbmapper.query(Comment.class,new DynamoDBQueryExpression<Comment>().withHashKeyValues(queryItem)).get(0);
+        return dbMapper.query(Comment.class,new DynamoDBQueryExpression<Comment>().withHashKeyValues(queryItem)).get(0);
     }
 
     public void updateChild_count(Comment thread) {
-        dbmapper.save(thread);
+        dbMapper.save(thread);
     }
 }
