@@ -1,5 +1,6 @@
 package com.revature.postComment;
 
+import com.amazonaws.services.dynamodbv2.xspec.L;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 import java.lang.reflect.Field;
@@ -19,21 +20,22 @@ public class PostCommentService {
 
     public boolean addComment(Comment comment) {
         boolean valid;
-        try {
-            if (comment.getDate_created().length() != 26 || comment.getDate_created().equals(LocalDateTime.MIN.toString())) {
-                comment.setDate_created(LocalDateTime.now().toString());
-            }
-            valid = isValid(comment);
-        } catch (Exception e) {
-            e.printStackTrace();
-            valid = false;
-        }
+        if (comment == null) { return false; }
+
+        comment.setDate_created(LocalDateTime.now().toString());
+
+        valid = isValid(comment);
+
+        if (!valid) { return false; }
+
         Comment parentThread = nodeRepo.getThread(comment.getParent());
         if (parentThread == null) {
             valid = false;
         }
         if (valid) {
             nodeRepo.addComment(comment);
+            parentThread.setChild_count(parentThread.getChild_count() + 1);
+            nodeRepo.updateChild_count(parentThread);
         }
         return valid;
     }
@@ -48,10 +50,7 @@ public class PostCommentService {
                 comment.getParent().trim().equals("")) {
             return false;
         }
-        // if comment isn't new (within ten minutes of .now)
-        if (commentDate.isBefore(LocalDateTime.now().minusMinutes(10))) {
-            return false;
-        }
+
         return true;
     }
 
