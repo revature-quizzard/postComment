@@ -22,6 +22,7 @@ public class NodeRepository {
         return dbMapper.query(Comment.class,new DynamoDBQueryExpression<Comment>().withHashKeyValues(queryItem)).get(0);
     }
 
+    // argument should be the full item of the updated thread
     public void updateChild_count(Comment thread) {
         dbMapper.save(thread);
     }
