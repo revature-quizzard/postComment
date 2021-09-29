@@ -41,6 +41,7 @@ public class postCommentHandler implements RequestHandler<APIGatewayProxyRequest
 
             return response;
         } else {
+            logger.log("failed to save requested item to database");
             response.setStatusCode(400);
 
             return response;
