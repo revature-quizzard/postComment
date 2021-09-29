@@ -29,7 +29,10 @@ public class PostCommentService {
      */
     public boolean addComment(Comment comment) {
         boolean valid;
-        if (comment == null) { return false; }
+        if (comment == null) {
+            logger.log("no request body provided");
+            return false;
+        }
 
         comment.setDate_created(LocalDateTime.now().toString());
 
@@ -39,6 +42,7 @@ public class PostCommentService {
 
         Comment parentThread = nodeRepo.getThread(comment.getParent());
         if (parentThread == null) {
+            logger.log("the specified parent thread doesn't  exist");
             valid = false;
         }
         if (valid) {
@@ -64,6 +68,7 @@ public class PostCommentService {
                 comment.getOwner() == null || comment.getOwner().trim().equals("") || comment.getAncestors() == null ||
                 comment.getAncestors().size() != 2 || comment.getParent() == null ||
                 comment.getParent().trim().equals("")) {
+            logger.log("provided Comment contains a null or empty required field or an invalid number or ancestors");
             return false;
         }
 
