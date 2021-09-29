@@ -1,18 +1,23 @@
 package com.revature.postComment;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+
 import java.time.LocalDateTime;
 
 public class PostCommentService {
 
     private NodeRepository nodeRepo;
+    private LambdaLogger logger;
 
-    public PostCommentService() {
+    public PostCommentService(LambdaLogger logger) {
         this.nodeRepo = new NodeRepository();
+        this.logger = logger;
     }
 
     // used to mack NodeRepository in test suite
-    public PostCommentService(NodeRepository nodeRepo) {
+    public PostCommentService(NodeRepository nodeRepo, LambdaLogger logger) {
         this.nodeRepo = nodeRepo;
+        this.logger = logger;
     }
 
     /**

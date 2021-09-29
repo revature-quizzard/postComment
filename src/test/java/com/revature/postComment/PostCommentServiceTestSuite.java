@@ -1,5 +1,6 @@
 package com.revature.postComment;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,17 +16,20 @@ public class PostCommentServiceTestSuite {
 
     PostCommentService sut;
     NodeRepository mockNodeRepo;
+    LambdaLogger mockLogger;
 
     @BeforeEach
     public void caseSetUp() {
         mockNodeRepo = mock(NodeRepository.class);
-        sut = new PostCommentService(mockNodeRepo);
+        mockLogger = mock(LambdaLogger.class);
+        sut = new PostCommentService(mockNodeRepo, mockLogger);
     }
 
     @AfterEach
     public void caseCleanUp() {
         sut = null;
         reset(mockNodeRepo);
+        reset(mockLogger);
     }
 
     @Test
