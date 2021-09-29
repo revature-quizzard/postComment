@@ -12,7 +12,6 @@ import lombok.SneakyThrows;
 public class postCommentHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     private static final Gson mapper = new GsonBuilder().setPrettyPrinting().create();
-    private final PostCommentService service = new PostCommentService();
 
     /**
      * Handler method for Post Comment lambda. Handles the request it's given and returns an appropriate response
@@ -28,6 +27,7 @@ public class postCommentHandler implements RequestHandler<APIGatewayProxyRequest
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent requestEvent, Context context) {
 
         LambdaLogger logger = context.getLogger();
+        PostCommentService service = new PostCommentService(logger);
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
 
         Comment input = mapper.fromJson(requestEvent.getBody(), Comment.class);
@@ -41,6 +41,7 @@ public class postCommentHandler implements RequestHandler<APIGatewayProxyRequest
 
             return response;
         } else {
+            logger.log("failed to save requested item to database");
             response.setStatusCode(400);
 
             return response;
