@@ -9,6 +9,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.SneakyThrows;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class postCommentHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     private static final Gson mapper = new GsonBuilder().setPrettyPrinting().create();
@@ -38,7 +41,10 @@ public class postCommentHandler implements RequestHandler<APIGatewayProxyRequest
             logger.log("saved to database: " + input.toString());
 
             response.setStatusCode(201);
-
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization");
+            headers.put("Access-Control-Allow-Origin", "*");
+            response.setHeaders(headers);
             return response;
         } else {
             logger.log("failed to save requested item to database");
