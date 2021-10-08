@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: A simple AWS Lambda for adding new comments on a thread to the ForumNodes DynamnoDB table.
+Resources:
+  postCommentForum:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: target/postComment-1.0-SNAPSHOT.jar
+      Handler: com.revature.postComment.postCommentHandler
+      Runtime: java8.al2
+      Description: Java function
+      MemorySize: 256
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - arn:aws:iam::011217676466:policy/post-comment-policy
